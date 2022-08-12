@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin: 0px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mb-5">
+        <h3 class="mb-3">Sign in</h3>
+        <input type="text" placeholder="UserName" id="userInp" class="form-control mb-3">
+        <input type="password" placeholder="Password" id="passInp" class="form-control mb-3">
+        <div class="form-check form-switch mb-2">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+            <label class="form-check-label" for="flexSwitchCheckChecked">Keep me Logged in</label>
+          </div>
+        <button type="text" id="sub_btn" class="btn btn-outline-primary mb-3 w-100">Sign in</button>
+        <a href="register.html"><span class="badge text-bg-info py-1 w-100">Don't have an account</span></a>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.2/firebase-app.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyBxdNmLs7VGgCXSInYr_8fLaAQ2_6Rwcpo",
+          authDomain: "fir-login-9ac7b.firebaseapp.com",
+          databaseURL: "https://fir-login-9ac7b-default-rtdb.firebaseio.com",
+          projectId: "fir-login-9ac7b",
+          storageBucket: "fir-login-9ac7b.appspot.com",
+          messagingSenderId: "187730649914",
+          appId: "1:187730649914:web:ac667ed8da9ab6ee6aa603",
+          measurementId: "G-DM82VGBQJR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        import { getDatabase, ref, set, child, get }
+            from "https://www.gstatic.com/firebasejs/9.9.2/firebase-database.js";
+
+        const db = getDatabase();
+        
+        const username = document.getElementById('userInp');
+        const pass = document.getElementById('passInp');
+        const submit = document.getElementById('sub_btn');
+
+        function AuthinticateUser(){
+            const dbRef = ref(db);
+
+            get(child(dbRef, "UsersList/" + username.value)).then((snapshot)=>{
+                if(snapshot.exists()){
+                    let dbpass = decPass(snapshot.val().password);
+                    if(dbpass == pass.value){
+                        login(snapshot.val());
+                    }
+                    else{
+                        alert("-User does not exsit\n-Check your Password and Username")
+                    }
+                }
+                else{
+                    set(ref(db, "UsersList/"+ username.value),
+                    {
+                        fullname: name.value,
+                        email: email.value,
+                        username: username.value,
+                        password: encPass()
+                    })
+                    .then(()=>{
+                        alert("User added succesfully");
+                    })
+                    .catch((error)=>{
+                        alert("error" + error);
+                    })
+                }
+            });
+        }
+            
+        function decPass(dbpass){
+            var pass12 =  CryptoJS.AES.decrypt(dbpass , pass.value);
+            return pass12.toString(CryptoJS.enc.Utf8);
+        }
+    
+        function login(user){
+            let keepLoggedIn = document.getElementById('flexSwitchCheckChecked').checked;
+
+            if(!keepLoggedIn){
+                sessionStorage.setItem('user', JSON.stringify(user));
+                window.location="home.html";
+            }
+            else{
+                localStorage.setItem('keepLoggedIn', 'yes');
+                localStorage.setItem('user', JSON.stringify(user));
+                window.location = "home.html";
+            }
+        }
+
+        submit.addEventListener('click', AuthinticateUser);
+
+    </script>
+</body>
+</html>

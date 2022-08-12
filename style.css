@@ -1,0 +1,13 @@
+.navbar ul li{
+    display: flex;
+    flex-direction: row;
+}
+.navbar ul li a{
+    margin: 10px 10px;
+}
+.navbar ul li .nav-magin{
+    margin-top: 10px;
+}
+.navbar ul li .signup{
+    margin-left: 400px;
+}
