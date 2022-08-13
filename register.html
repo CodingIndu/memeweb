@@ -68,7 +68,7 @@
 
         function Validation(){
             let nameregex = /^[a-zA-Z]+$/;
-            let emailregex = /^[a-zA-Z0-9]+@(gmail|yahoo|outlook)\.com$/;
+            let emailregex = /^[a-zA-Z0-9.]+@(gmail|yahoo|outlook)\.com$/;
             let userregex = /^[a-zA-Z0-9]{5,}$/;
 
             if(isEmptyOrSpaces(name.value) || isEmptyOrSpaces(email.value) || isEmptyOrSpaces(username.value) || isEmptyOrSpaces(pass.value)){
