@@ -1,13 +1,96 @@
-.navbar ul li{
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    transition: all 0.3s ease;
+}
+nav{
+    background: #171c24;
     display: flex;
     flex-direction: row;
 }
-.navbar ul li a{
-    margin: 10px 10px;
+nav .logopic{
+    flex: 1;
+    margin: 5px;
 }
-.navbar ul li .nav-magin{
-    margin-top: 10px;
+nav .logopic img{
+    width: 25%;
+    padding-left: 30px;
 }
-.navbar ul li .signup{
-    margin-left: 400px;
+nav .logo{
+    flex: 1;
+    color: white;
+    font-family: 'Acme', sans-serif;
+    font-size: 25px;
+    padding-top: 30px;
+}
+nav .navbar{
+    flex: 1;
+}
+nav .navbar ul{
+    display: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: -50px;
+}
+nav .navbar ul li a{
+    color: white;
+    font-family: 'Epilogue', sans-serif;
+    font-size: 20px;
+}
+nav .navbar ul li{
+    padding: 10px 20px;
+    border-bottom: 1px solid transparent;
+    width: 75%;
+}
+nav .navbar ul li .nav-user{
+    font-size: 22px;
+}
+nav .navbar ul li:hover{
+    border-bottom: 1px solid #ff9966;
+}
+input{
+    display: none;
+}
+label i{
+    margin-top: 9%;
+}
+.btn1{
+    color: white;
+    flex: 1;
+    margin-left: 50%;
+    margin-top: 15px;
+    font-size: 35px;
+}
+.bx-x{
+    display: none;
+}
+#check:checked ~ .navbar ul{
+    display: block;
+}
+@media (max-width: 980px){
+    nav .logo{
+        font-size: 100%;
+    }
+}
+@media (max-width: 617px){
+    nav .logo{
+        font-size: 80%;
+    }
+    nav .logopic img{
+        width: 35%;
+    }
+}
+@media (max-width: 545px){
+    nav .logo{
+        font-size: 50%;
+        text-align: center;
+    }
+    nav .navbar ul li a{
+        font-size: 10px;
+    }
+    nav .navbar ul li .nav-user{
+        font-size: 12px;
+    }
 }
